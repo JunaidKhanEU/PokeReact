@@ -1,0 +1,11 @@
+.Pokecard-zoom {
+  transition: all 0.2s ease-out; /* Animation */
+  filter: grayscale(10%) blur(0.2px);
+}
+
+.Pokecard-zoom:hover {
+  transform: scale(
+    1.2
+  ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  filter: grayscale(0%) blur(0px);
+}
