@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Pokedex from "./Pokedex";
 
 class Pokegame extends Component {
-  state = {
+  static defaultProps = {
     pokemons: [
       { id: 4, name: "Charmander", type: "fire", base_experience: 62 },
       { id: 7, name: "Squirtle", type: "water", base_experience: 63 },
@@ -12,52 +12,30 @@ class Pokegame extends Component {
       { id: 39, name: "Jigglypuff", type: "normal", base_experience: 95 },
       { id: 94, name: "Gengar", type: "poison", base_experience: 225 },
       { id: 133, name: "Eevee", type: "normal", base_experience: 65 }
-    ],
-    teamAScore: 0,
-    teamBScore: 0,
-    winnerA: "",
-    winnerB: ""
+    ]
   };
-  randomNum(teamName) {
-    let teamScore = 0;
-    //generating random number for pokemons array
-    let numbers = Array.from({ length: this.state.pokemons.length / 2 }, () =>
-      Math.floor(Math.random() * this.state.pokemons.length)
-    );
-
-    //using random numbers to generate 4 length array for each function call
-    //in this case 2 call each recive array of random with lenght 4
-    let randomPokemons = numbers.map(pokeIndex => {
-      teamScore += this.state.pokemons[pokeIndex].base_experience;
-      return this.state.pokemons[pokeIndex];
-    });
-
-    // teamscore calculating and assign to state properties for each team
-    teamName === "A"
-      ? (this.state.teamAScore = teamScore)
-      : (this.state.teamBScore = teamScore);
-    // check the winner team
-
-    return randomPokemons;
-  }
 
   render() {
-    console.log(this.state.winnerA);
+    let hand1 = [];
+    let hand2 = [...this.props.pokemons];
+    while (hand1.length < hand2.length) {
+      let randIndex = Math.floor(Math.random() * hand2.length);
+      let randpokemon = hand2.splice(randIndex, 1)[0];
+      hand1.push(randpokemon);
+    }
+    let exp1 = hand1.reduce((acc, item) => {
+      return acc + item.base_experience;
+    }, 0);
+    let exp2 = hand2.reduce((acc, item) => {
+      return acc + item.base_experience;
+    }, 0);
     return (
       <div className="container text-center">
         <h1> PokeReact </h1>
 
-        <Pokedex
-          pokemons={this.randomNum("A")}
-          team="A"
-          teamScore={this.state.teamAScore}
-        />
+        <Pokedex pokemons={hand1} exp={exp1} isWinner={exp1 > exp2} />
 
-        <Pokedex
-          pokemons={this.randomNum("B")}
-          team="B"
-          teamScore={this.state.teamBScore}
-        />
+        <Pokedex pokemons={hand2} exp={exp2} isWinner={exp2 > exp1} />
       </div>
     );
   }

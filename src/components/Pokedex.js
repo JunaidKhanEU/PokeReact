@@ -6,7 +6,10 @@ class Pokedex extends Component {
     return (
       <div>
         <h5 className="my-2">
-          Team {this.props.team} Score:{this.props.teamScore}
+          Team {this.props.team} Score:{this.props.exp}
+          <span className="text-info">
+            {this.props.isWinner ? " Winner" : " Loser"}
+          </span>
         </h5>
 
         <div className="row text-center">

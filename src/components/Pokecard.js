@@ -5,7 +5,7 @@ class Pokecard extends Component {
     const { id, name, type, exp } = this.props;
     const modifyId = id.toString().padStart(3, "0");
     return (
-      <div className="card m-0">
+      <section className="card m-0">
         <h5 className="card-title mt-1"> {name} </h5>
 
         <div className="card-body m-0 p-0">
@@ -17,7 +17,7 @@ class Pokecard extends Component {
           <p className="card-text p-0 m-0">Type : {type}</p>
           <p className="card-textp-0 m-0">EXP : {exp}</p>
         </div>
-      </div>
+      </section>
     );
   }
 }
